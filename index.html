@@ -265,11 +265,15 @@
         .cta-buttons {
             flex-direction: column; /* Stack buttons vertically */
             align-items: center; /* Center buttons horizontally */
+            justify-content: center; /* Ensure center alignment */
             gap: 10px; /* Adjust gap for vertical stacking */
+            padding: 0 20px; /* Add side padding */
+            width: 100%; /* Full width container */
         }
         .cta-buttons .button {
-            width: 80%; /* Make buttons wider on mobile */
+            width: 100%; /* Full width buttons */
             max-width: 280px; /* Set a max-width for mobile */
+            margin: 0 auto; /* Center the button */
         }
     }
 
