@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Web Development Session Details - South Beach Geek</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* --- Base Styles --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; /* Common system font stack */
+            line-height: 1.7; /* Slightly increased line height for readability */
+            background-color: #f4f7f9; /* Light grey background */
+            color: #444; /* Slightly softer text color */
+            margin: 0; /* Remove default body margin */
+            padding: 40px 15px; /* Add padding around the card */
+        }
+
+        /* --- Card Styles --- */
+        .card {
+            background-color: #ffffff; /* White card background */
+            border-radius: 10px; /* Slightly more rounded corners */
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); /* Slightly deeper shadow */
+            padding: 0; /* Remove padding here, apply to inner div */
+            max-width: 850px; /* Max width of the card */
+            margin: 0 auto; /* Center the card on the page */
+            border-top: 5px solid #3498db; /* Blue header bar */
+            overflow: hidden; /* Contain padding and negative margins */
+        }
+        .card-content {
+            padding: 30px 45px; /* Padding inside the card */
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3 {
+            color: #2c3e50; /* Darker heading color */
+            margin-top: 1.8em;
+            margin-bottom: 1em;
+            line-height: 1.3;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 0.5em; /* Adjusted top margin */
+            margin-bottom: 1.2em;
+            color: #3498db; /* Brand-like color for main title */
+            font-size: 1.8em; /* Slightly larger H1 */
+        }
+        h2 {
+            border-bottom: 2px solid #ecf0f1; /* Slightly bolder separator */
+            padding-bottom: 0.5em;
+            margin-top: 2.5em; /* More space above H2 */
+        }
+        h2:first-of-type {
+             margin-top: 1.5em; /* Less space for the first H2 after intro */
+        }
+        p {
+            margin-bottom: 1.2em; /* Spacing below paragraphs */
+        }
+        ul {
+            margin-left: 0;
+            padding-left: 0; /* Reset padding, handle with list items */
+            list-style: none; /* Remove default bullets */
+        }
+        li {
+            margin-bottom: 14px; /* More space between list items */
+            padding-left: 35px; /* Space for icon */
+            position: relative; /* For icon positioning */
+        }
+        /* Style for Font Awesome icons in list items */
+        li .fa-fw {
+            position: absolute;
+            left: 0;
+            top: 5px; /* Adjust vertical alignment */
+            width: 20px; /* Fixed width */
+            text-align: center;
+            color: #3498db; /* Icon color */
+            font-size: 1.1em;
+        }
+        ul ul { /* Nested list styling */
+             margin-top: 10px;
+             margin-bottom: 10px;
+             padding-left: 20px; /* Indent nested lists */
+        }
+        ul ul li {
+             padding-left: 0; /* Reset padding for nested */
+             list-style: disc; /* Use standard bullets for nested */
+             margin-left: 20px; /* Indent nested list items */
+        }
+         ul ul li::marker { /* Style nested bullets if needed */
+             color: #7f8c8d;
+         }
+        /* Remove icon space for nested list items */
+        ul ul li .fa-fw {
+            display: none;
+        }
+
+        a {
+            color: #3498db; /* Link color */
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: #2980b9;
+        }
+
+        /* --- Helper Classes & Elements --- */
+        .note {
+            font-style: italic;
+            color: #7f8c8d; /* Softer grey for notes */
+            font-size: 0.9em;
+        }
+        .value-highlight {
+            font-weight: bold;
+            color: #27ae60; /* Slightly different green */
+        }
+        /* Removed .icon-placeholder style */
+        .section-divider {
+             border: 0;
+             height: 1px;
+             background-color: #e0e6ed; /* Lighter divider color */
+             margin: 40px 0; /* More vertical spacing */
+        }
+        .info-box, .value-box {
+             background-color: #f8f9fa; /* Very light grey */
+             border-left: 4px solid #bdc3c7; /* Grey left border */
+             padding: 15px 20px;
+             margin: 15px 0;
+             border-radius: 4px;
+             position: relative; /* For potential icon */
+             padding-left: 45px; /* Space for icon */
+        }
+        .info-box::before, .value-box::before { /* Add icons to boxes */
+             font-family: "Font Awesome 6 Free";
+             font-weight: 900; /* Use solid style */
+             position: absolute;
+             left: 15px;
+             top: 15px;
+             font-size: 1.2em;
+             color: #bdc3c7; /* Default icon color */
+        }
+        .info-box::before {
+             content: "\f05a"; /* Font Awesome info-circle */
+             color: #3498db; /* Blue info icon */
+        }
+        .value-box {
+             border-left-color: #27ae60; /* Green border for value */
+        }
+        .value-box::before {
+             content: "\f005"; /* Font Awesome star */
+             color: #f1c40f; /* Yellow star icon */
+        }
+        /* Reset list style inside info/value boxes */
+        .info-box ul, .value-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .info-box ul li, .value-box ul li {
+            padding-left: 0; /* Remove icon padding */
+            position: static; /* Reset position */
+        }
+        .info-box ul li::marker, .value-box ul li::marker {
+             content: ""; /* Remove markers if any */
+         }
+
+        .booking-steps {
+            list-style-type: decimal; /* Use numbers for steps */
+            padding-left: 30px;
+        }
+         .booking-steps li {
+             padding-left: 10px; /* Adjust padding for numbered list */
+             position: static; /* Reset position */
+         }
+         .booking-steps li .fa-fw {
+             display: none; /* Hide icons in numbered list */
+         }
+
+        /* --- CTA Section --- */
+        .centered-cta {
+             background-color: #eaf5fc; /* Light blue background */
+             text-align: center;
+             padding: 35px 20px; /* Increased padding */
+             /* Negative margins pull it edge-to-edge within card-content padding */
+             margin-left: -45px;
+             margin-right: -45px;
+             margin-top: 40px;
+             border-top: 1px solid #d6eaf8;
+        }
+        /* Adjust bottom margin for last element before CTA */
+         .card-content > *:last-child:not(.centered-cta) {
+             margin-bottom: 0;
+         }
+        .centered-cta h2 {
+            margin-top: 0;
+            border-bottom: none;
+            font-size: 1.5em;
+        }
+        .button {
+            display: inline-block;
+            background-color: #3498db;
+            color: #ffffff !important; /* Override default link color */
+            padding: 12px 25px; /* Slightly larger button */
+            border-radius: 5px;
+            text-decoration: none !important; /* Remove underline */
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 10px 5px; /* Space around buttons */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: none;
+            cursor: pointer;
+            text-align: center; /* Ensure text inside button is centered */
+        }
+        .button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+        .signature {
+             margin-top: 30px;
+             font-weight: bold;
+             color: #555;
+        }
+
+    /* --- Responsive Adjustments --- */
+    @media (max-width: 768px) {
+        body {
+            padding: 20px 10px; /* Reduce body padding on small screens */
+        }
+        .card-content {
+            padding: 25px 20px; /* Reduced horizontal padding */
+        }
+        .centered-cta {
+            margin-left: -20px; /* Match new padding */
+            margin-right: -20px; /* Match new padding */
+            padding: 25px 15px; /* Adjust CTA padding */
+        }
+        h1 {
+            font-size: 1.6em; /* Slightly smaller H1 */
+        }
+        li {
+            padding-left: 30px; /* Adjust icon spacing */
+            margin-bottom: 12px;
+        }
+        li .fa-fw {
+            left: 5px;
+            top: 4px;
+        }
+        ul ul {
+            padding-left: 15px; /* Adjust nested list indent */
+        }
+        ul ul li {
+            margin-left: 15px;
+        }
+        .info-box, .value-box {
+             padding: 15px 15px 15px 40px; /* Adjust box padding */
+        }
+        .info-box::before, .value-box::before {
+             left: 12px; /* Adjust box icon position */
+             top: 14px;
+        }
+        .button { /* General mobile button adjustments */
+            padding: 10px 20px; /* Slightly smaller buttons */
+            font-size: 0.95em;
+        }
+        /* --- Mobile CTA Button Styles --- */
+        .cta-buttons {
+            flex-direction: column; /* Stack buttons vertically */
+            align-items: center; /* Center buttons horizontally */
+            gap: 10px; /* Adjust gap for vertical stacking */
+        }
+        .cta-buttons .button {
+            width: 80%; /* Make buttons wider on mobile */
+            max-width: 280px; /* Set a max-width for mobile */
+        }
+    }
+
+    /* --- CTA Button Wrapper --- */
+    .cta-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: stretch; /* Make buttons equal height if text wraps */
+        flex-wrap: wrap; /* Allow wrapping if needed */
+        gap: 15px; /* Space between buttons */
+        margin-top: 15px; /* Add some space above the buttons */
+    }
+    .cta-buttons .button {
+        width: 45%; /* Equal width basis */
+        max-width: 220px; /* Max width per button */
+        margin: 0; /* Reset margin from default .button style */
+        flex-grow: 1; /* Allow buttons to grow if space allows */
+    } 
+
+    /* --- Quick Links Styling --- */
+    .quick-links {
+        text-align: center;
+        margin-bottom: 25px; /* Space below links */
+        font-size: 0.9em;
+        color: #7f8c8d; /* Softer color for separators */
+    }
+    .quick-links a {
+        color: #555; /* Slightly darker link color */
+        font-weight: 500;
+        text-decoration: none;
+        margin: 0 8px; /* Space around links */
+        transition: color 0.2s ease;
+    }
+    .quick-links a:hover {
+        color: #3498db; /* Brand color on hover */
+        text-decoration: underline;
+    }
+
+    </style>
+    </head>
+<body>
+
+    <div class="card">
+        <div class="card-content">
+
+            <h1><i class="fas fa-rocket" style="margin-right: 10px; color: #3498db;"></i>Live Web Development Session Details</h1>
+
+            <p>Hi Valued Client, </p>
+
+            <p>Thanks so much for your interest in my live web development session! I saw your inquiry and wanted to provide all the details upfront so you can book directly if this sounds like the right fit for you.</p>
+
+            <p>My goal is to get you set up with a beautiful, functional WordPress website quickly and efficiently during a live, 1-hour collaborative session on Zoom. I handle the technical work, treating your site as my own, while you provide feedback and direction (or simply watch!).</p>
+
+            <!-- Quick Links Section -->
+            <div class="quick-links">
+                <a href="#breakdown">What's Included</a> |
+                <a href="#booking">Booking Process</a> |
+                <a href="#notes">Important Notes</a> |
+                <a href="#whoami">Who Am I?</a>
+            </div>
+
+            <hr class="section-divider">
+
+            <h2 id="breakdown">Here’s a breakdown:</h2>
+            <ul>
+                <li><i class="fas fa-cog fa-fw"></i><strong>Core Service:</strong> One intensive, focused hour of live web development via Zoom where I build your site foundation.</li>
+                <li><i class="fab fa-wordpress fa-fw"></i><strong>Platform:</strong> We will be working exclusively with WordPress, which we'll install during the session.</li>
+                <li><i class="fas fa-users fa-fw"></i><strong>Live & Collaborative:</strong> You watch me build in real-time, provide input if you like, and ask questions. I do the heavy lifting to make it easy for you.</li>
+                <li>
+                    <i class="fas fa-server fa-fw"></i><strong>Hosting Setup & Flexibility:</strong> We'll set up your web hosting.
+                    <div class="info-box">
+                        <ul>
+                            <li class="note">Note on Costs: Your domain registration (~$15/year) and web hosting are separate costs paid directly to providers.</li>
+                            <li class="note">Recommendation: My preferred managed hosting is $35/month. While I'm happy to work with your chosen host, I recommend this option as it's optimized for speed and helps us avoid common host-related issues, ensuring our hour is as productive as possible.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li><i class="fas fa-globe fa-fw"></i><strong>Domain Connection:</strong> We'll connect your purchased domain name to your hosting.</li>
+                <li>
+                    <i class="fas fa-gem fa-fw"></i><strong>Included Premium Software & Design (<span class="value-highlight">$600+ Value!</span>):</strong>
+                    <div class="value-box">
+                        <ul>
+                            <li>You get a lifetime license for Astra Pro & Spectra Pro included (normally $600+)!</li>
+                            <li>Using these powerful tools, we'll implement a professional, mobile-ready design, incorporate your brand colors, choose from hundreds of fonts, set up key pages (like Home, About, Contact) **including professional starter content**, integrate your logo, add a contact form, and install basic Security/SEO plugins. The site will be e-commerce capable.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li><i class="fas fa-envelope fa-fw"></i><strong>Email Setup Guidance:</strong> We'll guide you on setting up a professional email address linked to your domain (via your hosting).</li>
+                <li><i class="fas fa-file-alt fa-fw"></i><strong>No Content Prep Needed!:</strong> Just show up! I can provide professional starter content and images. If you can share a little about your company/goals, that's helpful, but not required for us to build a great site.</li>
+                <li><i class="fas fa-star fa-fw"></i><strong>Laying the Groundwork:</strong> We focus this hour on creating your professional website foundation. More advanced features or extensive content/product additions can be seamlessly integrated through additional sessions.</li>
+                <li><i class="fas fa-key fa-fw"></i><strong>Handover & Easy Editing:</strong> You get full ownership and all necessary login credentials. I build sites so editing text and images is incredibly user-friendly - often as simple as logging in and typing like a message to a friend!</li>
+                <li><i class="fas fa-bullseye fa-fw"></i><strong>The Goal:</strong> By the end of the hour, you will have a live, professionally designed, functional WordPress website foundation that you can easily manage.</li>
+                <li><i class="fas fa-clock fa-fw"></i><strong>Need More Time?</strong> One hour is usually sufficient for a strong foundation. If you need further development, you can easily book additional 1-hour sessions ($150/hr) via Fiverr. Many clients work with me ongoing.</li>
+                <li><i class="fas fa-life-ring fa-fw"></i><strong>Lifetime Guidance & Confidence:</strong> My commitment doesn't end after the hour. I pride myself on ensuring every client feels confident with their new website. I'm here to provide guidance and support via Fiverr messages for the lifetime of your website.</li>
+                <li><i class="fas fa-video fa-fw"></i><strong>Session Recording:</strong> Want a reference? I can record our Zoom session for you to use as a future tutorial for making edits. Just let me know!</li>
+                <li><i class="fab fa-fiverr fa-fw"></i><strong>My Fiverr Profile:</strong> See my reviews and confirm my services here: <a href="https://Fiverr.com/southbeachgeek/build-you-a-website" target="_blank" rel="noopener noreferrer">Fiverr.com/southbeachgeek/build-you-a-website</a></li>
+            </ul>
+
+            <hr class="section-divider">
+
+            <h2 id="booking"><i class="fas fa-list-check" style="margin-right: 10px; color: #2c3e50;"></i>Booking Process:</h2>
+            <ol class="booking-steps">
+                <li>Place your order for the "1 Hour Web Development Session" Gig directly on my <a href="https://Fiverr.com/southbeachgeek/build-you-a-website" target="_blank" rel="noopener noreferrer">Fiverr profile linked above</a>.</li>
+                <li>Once the order is active, use my Calendly link to schedule your 1-hour Zoom session: <a href="https://Calendly.com/southbeachgeek/1hr" target="_blank" rel="noopener noreferrer">Calendly.com/southbeachgeek/1hr</a></li>
+            </ol>
+
+            <hr class="section-divider">
+
+            <h2 id="notes"><i class="fas fa-exclamation-circle" style="margin-right: 10px; color: #2c3e50;"></i>Important Notes:</h2>
+            <ul>
+                <li><i class="fas fa-calendar-alt fa-fw"></i><strong>Time Zones:</strong> Calendly should automatically adjust for your time zone, but please double-check when booking.</li>
+                <li><i class="fas fa-laptop fa-fw"></i><strong>Tech Recommendations:</strong> You'll need a stable internet connection. While you can join the Zoom session from any device, using a computer or tablet is highly recommended to ensure you can clearly see the website details and we can collaborate effectively within the hour.</li>
+            </ul>
+
+            <hr class="section-divider">
+
+            <h2 id="whoami"><i class="fas fa-user-circle" style="margin-right: 10px; color: #2c3e50;"></i>Who Am I?</h2>
+            <p>I'm Aaron (South Beach Geek), a passionate web developer with over 20 years of experience, ready to make this process smooth, enjoyable, and productive for you!</p>
+
+
+            <p style="margin-top: 40px;">Looking forward to potentially building your website together!</p>
+
+            <p class="signature">
+                Best regards,<br>
+                Aaron (South Beach Geek)
+            </p>
+
+
+        </div> <div class="centered-cta">
+             <h2><i class="fas fa-paper-plane" style="margin-right: 10px;"></i>Ready to Start?</h2>
+             <p>If this sounds good, please place your order on Fiverr and book your slot via Calendly using the links below.</p>
+             <div class="cta-buttons">
+                 <a href="https://Fiverr.com/southbeachgeek/build-you-a-website" target="_blank" rel="noopener noreferrer" class="button"><i class="fab fa-fiverr" style="margin-right: 8px;"></i>Order on Fiverr</a>
+                 <a href="https://Calendly.com/southbeachgeek/1hr" target="_blank" rel="noopener noreferrer" class="button"><i class="fas fa-calendar-check" style="margin-right: 8px;"></i>Book Session on Calendly</a>
+             </div>
+         </div>
+
+    </div></body>
+</html>
