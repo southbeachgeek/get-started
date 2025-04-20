@@ -684,6 +684,89 @@
             font-size: 0.9rem;
         }
         
+        /* --- FAQ Accordion --- */
+        .faq {
+            background-color: var(--neutral-200);
+        }
+        
+        .accordion {
+            margin-top: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        
+        .accordion-item {
+            background-color: white;
+            border-bottom: 1px solid var(--neutral-300);
+            overflow: hidden;
+        }
+        
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+        
+        .accordion-header {
+            padding: var(--spacing-lg);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--neutral-800);
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background-color: var(--neutral-200);
+        }
+        
+        .accordion-header.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .accordion-header i {
+            transition: transform 0.3s ease;
+        }
+        
+        .accordion-header.active i {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 var(--spacing-lg);
+        }
+        
+        .accordion-content.active {
+            max-height: 1000px;
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--neutral-300);
+        }
+        
+        .accordion-content p {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .accordion-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .accordion-content ul {
+            margin-left: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .accordion-group-title {
+            font-weight: 600;
+            color: var(--accent);
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+            font-size: 1.2rem;
+        }
+        
         /* --- Responsive Styles --- */
         @media (max-width: 768px) {
             h1 {
@@ -754,6 +837,7 @@
                 <a href="#services" class="navbar-link">Services</a>
                 <a href="#process" class="navbar-link">Process</a>
                 <a href="#estimator" class="navbar-link">Estimator</a>
+                <a href="#faq" class="navbar-link">FAQ</a>
                 <a href="#contact" class="navbar-link">Contact</a>
             </div>
         </div>
@@ -762,8 +846,8 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container hero-container">
-            <h1>Professional Web Development in as Little as One Hour</h1>
-            <p>Get a beautiful, functional WordPress website built during a live, collaborative session that can take as little as one hour. I handle the technical work while you provide feedback and direction.</p>
+            <h1>Professional Web Development in One Hour</h1>
+            <p>Get a beautiful, functional WordPress website built during a live, collaborative session. I handle the technical work while you provide feedback and direction.</p>
             <div class="hero-buttons">
                 <a href="#estimator" class="btn btn-primary">Try the Estimator</a>
                 <a href="#process" class="btn btn-secondary">Learn How It Works</a>
@@ -836,7 +920,7 @@
             <div class="section-title">
                 <h2>How It Works</h2>
             </div>
-            <p class="section-subtitle">A simple, streamlined process that can get you from idea to live website in record time.</p>
+            <p class="section-subtitle">A simple, streamlined process that gets you from idea to live website in record time.</p>
             
             <div class="process-steps">
                 <div class="process-step">
@@ -876,7 +960,7 @@
                     <h3>Why Use the Estimator?</h3>
                     <p>This tool helps you understand how different features impact the scope of your project. By selecting the options that match your needs, you'll get an instant estimate of the time required and associated cost.</p>
                     
-                    <p>While many projects can be completed in as little as a single one-hour session, more complex requirements might need additional time. The estimator provides transparency so we're aligned on expectations before we begin.</p>
+                    <p>While many projects can be completed in a single one-hour session, more complex requirements might need additional time. The estimator provides transparency so we're aligned on expectations before we begin.</p>
                     
                     <h3>How It Works</h3>
                     <ul>
@@ -999,13 +1083,227 @@
         </div>
     </section>
 
+    <!-- FAQ Section -->
+    <section id="faq" class="section faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <p class="section-subtitle">Find answers to common questions about the live web development session.</p>
+            
+            <div class="accordion">
+                <h3 class="accordion-group-title">Session Details</h3>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>What is included in the 1-hour live web development session?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>The session includes one hour of real-time WordPress website development conducted over Zoom. A full website foundation is built during this time. All technical work is handled live while the client watches, gives feedback, or simply observes. By the end of the hour, a professional and functional WordPress website is live and ready to use.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>What platform is used to build the website?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>The website is built using WordPress. A fresh installation is completed during the session, and all customization and setup are done within that platform.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>How does the session work in terms of participation?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Clients can participate actively by providing input and asking questions during the session. Alternatively, they may choose to observe while the website is built according to their initial direction.</p>
+                    </div>
+                </div>
+                
+                <h3 class="accordion-group-title">Technical Details</h3>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Is web hosting setup part of the session?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Yes. Web hosting setup is included. The hosting account is configured, and a domain is connected to make the website live.</p>
+                        <p>Domain registration (around $15/year) and hosting are separate costs paid to the chosen provider.</p>
+                        <p>A recommended hosting option at $35/month offers high speed and reliability, allowing for a more productive use of the hour. However, clients may choose any hosting provider they prefer.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Can a domain name be connected during the session?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Yes. A purchased domain name is connected to the hosting account to ensure the website goes live during the session.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Are premium tools or plugins included?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Yes. The session includes a lifetime license to Astra Pro and Spectra Pro, valued at over $600. These tools allow for enhanced design customization and include features such as:</p>
+                        <ul>
+                            <li>A responsive, mobile-optimized layout</li>
+                            <li>Integration of brand colors and fonts</li>
+                            <li>Setup of Home, About, and Contact pages with starter content</li>
+                            <li>Logo integration</li>
+                            <li>Contact form setup</li>
+                            <li>Basic SEO and security plugin installation</li>
+                            <li>eCommerce-ready functionality</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Is help provided for setting up a domain-based email address?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Yes. Assistance is included to help create a professional email address linked to the domain through the hosting provider.</p>
+                    </div>
+                </div>
+                
+                <h3 class="accordion-group-title">Content & Results</h3>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>What content is required before the session?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>No content is required beforehand. Professional starter content and images can be provided during the session. However, any business information, goals, or branding assets shared in advance will enhance the customization of the website.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>What is the expected outcome by the end of the session?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>By the end of the session, the client will have a live, functional, and professional WordPress website that is easy to manage and ready for visitors.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Can additional features or content be added later?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Yes. While the initial hour covers the full site foundation, more advanced features, additional content, or extended product catalogs can be added through future 1-hour sessions.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Will the client receive full access to the website?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Yes. All login credentials are provided to the client, who retains full ownership of the website. Editing content, images, and layout is made simple with a user-friendly backend, allowing for easy future updates.</p>
+                    </div>
+                </div>
+                
+                <h3 class="accordion-group-title">Booking & Support</h3>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>What if more time is needed beyond the 1-hour session?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>If additional development is required, more sessions can be scheduled. Each additional session is one hour in length and billed at $150 per hour.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Is ongoing support available after the session?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Yes. Lifetime support is provided via Fiverr messages. Clients can reach out for assistance, clarification, or general guidance regarding their website at any time.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Is it possible to receive a recording of the Zoom session?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Yes. The Zoom session can be recorded upon request and provided as a personal video tutorial for future reference.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>How is a session booked?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Visit the Fiverr profile and place an order for the "1 Hour Web Development Session" gig:</p>
+                        <p><a href="https://Fiverr.com/southbeachgeek/build-you-a-website" target="_blank">https://Fiverr.com/southbeachgeek/build-you-a-website</a></p>
+                        <p>After placing the order, schedule the Zoom session via Calendly:</p>
+                        <p><a href="https://Calendly.com/southbeachgeek/1hr" target="_blank">https://Calendly.com/southbeachgeek/1hr</a></p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Will Calendly automatically adjust for different time zones?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Yes. Calendly automatically detects the user's time zone and adjusts the schedule accordingly. It is recommended to double-check the selected time before finalizing the booking.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>What are the technical requirements for the Zoom session?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>A stable internet connection is essential. While mobile devices are supported, using a desktop computer or tablet is strongly recommended to ensure full visibility of the website and a productive session.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Who provides this service?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>The session is delivered by an experienced web developer with over 20 years in the industry. The developer specializes in building websites quickly and professionally, helping small business owners and entrepreneurs launch high-quality WordPress websites in just one session.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <!-- CTA Section -->
     <section id="contact" class="section cta">
         <div class="container">
             <div class="section-title">
                 <h2>Ready to Get Started?</h2>
             </div>
-            <p class="section-subtitle">Book your session today and have your professional website up and running in as little as one hour.</p>
+            <p class="section-subtitle">Book your session today and have your professional website up and running in one hour.</p>
             
             <div class="cta-buttons">
                 <a href="https://fiverr.com/southbeachgeek/build-you-a-website" target="_blank" class="btn btn-primary">Book on Fiverr</a>
@@ -1028,6 +1326,7 @@
                     <li><a href="#services">Services</a></li>
                     <li><a href="#process">Process</a></li>
                     <li><a href="#estimator">Estimator</a></li>
+                    <li><a href="#faq">FAQ</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
@@ -1147,6 +1446,34 @@
             $('summary').textContent = category;
             $('details').textContent = `Estimated time: ${hours} hour${hours !== 1 ? 's' : ''}. Estimated cost: $${cost}.`;
             
-            // Removed auto-scroll functionality as requested
+        // Removed auto-scroll functionality as requested
+        });
+        
+        // FAQ Accordion Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    // Toggle active class on the clicked header
+                    this.classList.toggle('active');
+                    
+                    // Get the content associated with this header
+                    const content = this.nextElementSibling;
+                    
+                    // Toggle the active class on the content
+                    content.classList.toggle('active');
+                    
+                    // Optional: Close other open accordions
+                    if (this.classList.contains('active')) {
+                        accordionHeaders.forEach(otherHeader => {
+                            if (otherHeader !== this) {
+                                otherHeader.classList.remove('active');
+                                otherHeader.nextElementSibling.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            });
         });
     </script>
