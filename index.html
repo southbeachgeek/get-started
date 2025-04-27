@@ -288,12 +288,12 @@
         }
         
         .btn-primary {
-            background-color: var(--accent);
+            background-color: #4a90e2; /* Medium blue */
             color: white;
         }
         
         .btn-primary:hover {
-            background-color: var(--accent-light);
+            background-color: #3a80d2; /* Slightly darker blue */
             color: white;
             transform: translateY(-2px);
             box-shadow: var(--shadow-md);
@@ -488,10 +488,11 @@
         .estimator-form {
             flex: 1;
             min-width: 300px;
-            background-color: var(--neutral-100);
+            background-color: white;
             padding: var(--spacing-xl);
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.1);
+            border: 1px solid #e6f2ff;
         }
         
         .form-group {
@@ -509,15 +510,16 @@
         .form-control {
             width: 100%;
             padding: var(--spacing-sm);
-            border: 1px solid var(--neutral-300);
+            border: 1px solid #d0e3ff;
             border-radius: var(--radius-sm);
             font-family: var(--font-body);
+            background-color: #fcfdff;
         }
         
         .form-control:focus {
             outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 2px rgba(44, 122, 123, 0.2);
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.15);
         }
         
         .checkbox-label {
@@ -533,13 +535,18 @@
         .advanced-toggle {
             background: none;
             border: none;
-            color: var(--secondary);
+            color: #4a90e2;
             font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
             margin-bottom: var(--spacing-md);
             padding: 0;
+            transition: color 0.2s ease;
+        }
+        
+        .advanced-toggle:hover {
+            color: #3a80d2;
         }
         
         .advanced-toggle i {
@@ -549,9 +556,9 @@
         .advanced-options {
             margin-top: var(--spacing-md);
             padding: var(--spacing-md);
-            background-color: white;
+            background-color: #f8fbff;
             border-radius: var(--radius-md);
-            border: 1px solid var(--neutral-300);
+            border: 1px solid #d0e3ff;
         }
         
         .advanced-section {
@@ -572,10 +579,11 @@
         .result-container {
             margin-top: var(--spacing-lg);
             padding: var(--spacing-lg);
-            background-color: var(--primary-light);
-            color: white;
+            background-color: #e6f2ff; /* Light blue background */
+            color: #333333; /* Dark text for contrast */
             border-radius: var(--radius-md);
             display: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
         
         .result-title {
@@ -1067,7 +1075,7 @@
                         </div>
                     </div>
                     
-                    <button type="button" id="estimateBtn" class="btn btn-primary" style="margin-top: 20px;">Calculate Estimate</button>
+                    <!-- Calculate Estimate button removed as estimates now update automatically when options change -->
                     
                     <div id="result" class="result-container">
                         <div class="result-title" id="summary"></div>
@@ -1081,12 +1089,15 @@
                         </div>
                         -->
 
-                        <div id="quote-text" style="display: none;"></div>
+                        <div id="quote-text" style="position: absolute; left: -9999px; top: 0;"></div>
+                        
                         
                         <div style="margin-top: 20px; background: rgba(255,255,255,0.1); padding: 12px; border-radius: 5px; text-align: center;">
                             <p style="margin-bottom: 10px; font-size: 0.9rem;">
                                 <i class="fas fa-info-circle"></i> Click below to copy your quote and open Fiverr messaging
                             </p>
+
+                            
                             
                             <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; justify-content: center;">
                                 <button id="copy-btn" class="btn btn-primary" style="min-width:100%; font-size: 0.9rem; padding: 15px 20px;">
@@ -1097,6 +1108,19 @@
                                 -->
                             </div>
                             
+
+                        <!-- Manual copy option -->
+                        <div style="margin-top: 20px; background: rgba(230, 242, 255, 0.5); padding: 15px; border-radius: 5px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                            <h4 style="margin-bottom: 10px; text-align: center; color: #333333;">Manual Copy Option</h4>
+                            <p style="font-size: 0.9rem; margin-bottom: 15px; color: #444444;">
+                                If the automatic copy button doesn't work, you can copy the text below and paste it as a message to South Beach Geek on Fiverr:
+                            </p>
+                            <div style="position: relative;">
+                                <textarea id="manual-quote-text" readonly style="width: 100%; height: 150px; padding: 10px; background-color: white; color: #333333; border: 1px solid #d0e3ff; border-radius: 4px; font-family: var(--font-body); font-size: 0.85rem; resize: none; margin-bottom: 10px;"></textarea>
+                                <button id="select-all-btn" class="btn btn-secondary" style="position: absolute; top: 10px; right: 25px; padding: 5px 10px; font-size: 0.8rem; background-color: #4a90e2; border: none; color: white;">Select All</button>
+                            </div>
+                        </div>
+
                             <div id="copy-status" style="margin-top: 10px; font-size: 0.85rem; display: none;">
                                 <i class="fas fa-check-circle"></i> Quote copied! When Fiverr opens, press Ctrl+V to paste and then send.
                             </div>
@@ -1492,129 +1516,193 @@ Looking forward to working with you!`;
 
         // Copy to clipboard and open Fiverr functionality
         function copyToClipboard() {
-            const quoteText = $('quote-text').innerText;
+            // Get the quote text
+            const quoteText = $('quote-text').textContent;
             const copyBtn = $('copy-btn');
             const originalText = copyBtn.innerHTML;
             
             // Disable button during process
             copyBtn.disabled = true;
             
-            navigator.clipboard.writeText(quoteText).then(() => {
-                // Success feedback
-                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied! Opening Fiverr in 3...';
-                
-                // Show persistent instruction
-                $('copy-status').style.display = 'block';
-                
-                // Countdown before opening Fiverr
-                let count = 3;
-                const countdown = setInterval(() => {
-                    if (count > 1) {
-                        count--;
-                        copyBtn.innerHTML = `<i class="fas fa-check"></i> Copied! Opening Fiverr in ${count}...`;
-                    } else {
-                        clearInterval(countdown);
-                        copyBtn.innerHTML = originalText;
-                        copyBtn.disabled = false;
-                        window.open('https://fiverr.com/inbox/southbeachgeek', '_blank');
-                    }
-                }, 1000);
-                
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-                // Fallback
-                const textArea = document.createElement('textarea');
-                textArea.value = quoteText;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                
-                // Show fallback feedback and persistent instruction
-                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied! Opening Fiverr in 3...';
-                $('copy-status').style.display = 'block';
-                
-                // Countdown before opening Fiverr
-                let count = 3;
-                const countdown = setInterval(() => {
-                    if (count > 1) {
-                        count--;
-                        copyBtn.innerHTML = `<i class="fas fa-check"></i> Copied! Opening Fiverr in ${count}...`;
-                    } else {
-                        clearInterval(countdown);
-                        copyBtn.innerHTML = originalText;
-                        copyBtn.disabled = false;
-                        window.open('https://fiverr.com/inbox/southbeachgeek', '_blank');
-                    }
-                }, 1000);
-            });
+            // Use the fallback method first (more reliable across browsers)
+            const textArea = document.createElement('textarea');
+            textArea.value = quoteText;
+            textArea.style.position = 'fixed';  // Avoid scrolling to bottom
+            textArea.style.opacity = '0';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            let successful = false;
+            try {
+                // Execute the copy command
+                successful = document.execCommand('copy');
+                if (!successful) {
+                    // If execCommand fails, try the clipboard API
+                    navigator.clipboard.writeText(quoteText).catch(err => {
+                        console.error('Both clipboard methods failed:', err);
+                    });
+                }
+            } catch (err) {
+                console.error('Error during copy operation:', err);
+                // Try the clipboard API as a backup
+                navigator.clipboard.writeText(quoteText).catch(err => {
+                    console.error('Both clipboard methods failed:', err);
+                });
+            }
+            
+            // Remove the temporary textarea
+            document.body.removeChild(textArea);
+            
+            // Show success feedback
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied! Opening Fiverr in 3...';
+            $('copy-status').style.display = 'block';
+            
+            // Countdown before opening Fiverr
+            let count = 3;
+            const countdown = setInterval(() => {
+                if (count > 1) {
+                    count--;
+                    copyBtn.innerHTML = `<i class="fas fa-check"></i> Copied! Opening Fiverr in ${count}...`;
+                } else {
+                    clearInterval(countdown);
+                    copyBtn.innerHTML = originalText;
+                    copyBtn.disabled = false;
+                    window.open('https://fiverr.com/inbox/southbeachgeek', '_blank');
+                }
+            }, 1000);
         }
 
-        // Estimate calculation
-        $('estimateBtn').addEventListener('click', () => {
-            let hours = 1; // base hour for core build
-            
-            // Get design involvement level
-            const designRadios = document.querySelectorAll('input[name="designLevel"]');
-            let designMultiplier = 1;
-            designRadios.forEach(r => { 
-                if (r.checked) designMultiplier = parseInt(r.value); 
-            });
-            
-            // Calculate based on pages
-            const pages = Math.max(1, +$('pages').value);
-            if (pages > 5) hours += (pages - 5) * 0.2;
-            
-            // Add hours for selected features
-            Object.keys(featureHours).forEach(key => {
-                if ($(key) && $(key).checked) hours += featureHours[key];
-            });
-            
-            // Additional features
-            if ($('contactForm') && $('contactForm').checked) hours += 0.5;
-            if ($('blogSection') && $('blogSection').checked) hours += 0.5;
-            if ($('imageGallery') && $('imageGallery').checked) hours += 0.5;
-            
-            // E-commerce calculation
-            if ($('ecom') && $('ecom').checked) {
-                const products = +$('products').value || 1;
-                hours += 1;
-                if (products > 5) hours += (products - 5) * 0.25;
-            }
-            
-            // Content migration calculation
-            if ($('migrate') && $('migrate').checked) {
-                const pagesMig = +$('migratePages').value || 1;
-                hours += Math.ceil(pagesMig / 3);
-            }
-            
-            // Apply design multiplier
-            hours *= designMultiplier;
-            
-            // Round up to nearest hour
-            hours = Math.ceil(hours);
-            const cost = (hours * 150).toFixed(2);
-            
-            // Determine category based on hours
-            const category = hours === 1 ? 'Quick & Easy – 1 session' : 'Complex – may need multiple sessions';
-            
-            // Generate features list and quote
-            const features = generateFeaturesList();
-            const quote = generateQuote(hours, cost, features);
-            
-            // Display results
-            $('result').style.display = 'block';
-            $('summary').textContent = category;
-            $('details').textContent = `Estimated time: ${hours} hour${hours !== 1 ? 's' : ''}. Estimated cost: $${cost}.`;
-            
-            // Show quote preview and store full quote
-            $('quote-preview').style.display = 'block';
-            $('quote-preview-content').textContent = features;
-            $('quote-text').textContent = quote;
-        });
+        // This function is no longer used as we've removed the Calculate Estimate button
+        // and now use calculateEstimate() directly
 
-        // Setup copy button
+        // Setup copy button and ensure it works properly
         $('copy-btn').addEventListener('click', copyToClipboard);
+        
+        // Function to calculate and update the estimate
+        function calculateEstimate() {
+            try {
+                console.log("Calculating estimate...");
+                
+                let hours = 1; // base hour for core build
+                
+                // Get design involvement level
+                const designRadios = document.querySelectorAll('input[name="designLevel"]');
+                let designMultiplier = 1;
+                designRadios.forEach(r => { 
+                    if (r.checked) designMultiplier = parseInt(r.value); 
+                });
+                
+                // Calculate based on pages
+                const pages = Math.max(1, +$('pages').value || 5);
+                if (pages > 5) hours += (pages - 5) * 0.2;
+                
+                // Add hours for selected features
+                Object.keys(featureHours).forEach(key => {
+                    if ($(key) && $(key).checked) hours += featureHours[key];
+                });
+                
+                // Additional features - blog, contact form, and gallery don't add hours
+                // These features are included in the base 1-hour price
+                
+                // E-commerce calculation
+                if ($('ecom') && $('ecom').checked) {
+                    const products = +$('products').value || 1;
+                    hours += 1;
+                    if (products > 5) hours += (products - 5) * 0.25;
+                }
+                
+                // Content migration calculation
+                if ($('migrate') && $('migrate').checked) {
+                    const pagesMig = +$('migratePages').value || 1;
+                    hours += Math.ceil(pagesMig / 3);
+                }
+                
+                // Apply design multiplier
+                hours *= designMultiplier;
+                
+                // Round up to nearest hour
+                hours = Math.ceil(hours);
+                const cost = (hours * 150).toFixed(2);
+                
+                // Determine category based on hours
+                const category = hours === 1 ? 'Quick & Easy – 1 session' : 'Complex – may need multiple sessions';
+                
+                // Generate features list and quote
+                const features = generateFeaturesList();
+                const quote = generateQuote(hours, cost, features);
+                
+                console.log("Calculation complete. Hours:", hours, "Cost:", cost);
+                console.log("Updating display...");
+                
+                // Make sure the result container exists
+                if (!$('result')) {
+                    console.error("Result container not found!");
+                    return;
+                }
+                
+                // Display results - force display block
+                $('result').style.display = 'block';
+                
+                // Update the summary and details
+                if ($('summary')) $('summary').textContent = category;
+                if ($('details')) $('details').textContent = `Estimated time: ${hours} hour${hours !== 1 ? 's' : ''}. Estimated cost: $${cost}.`;
+                
+                // Store full quote in hidden div
+                if ($('quote-text')) $('quote-text').textContent = quote;
+                
+                // Update the manual quote text area
+                updateManualQuoteText(quote);
+                
+                console.log("Display updated successfully");
+            } catch (error) {
+                console.error("Error in calculateEstimate:", error);
+            }
+        }
+        
+        // Auto-update estimate when any option changes
+        function setupAutoUpdate() {
+            // Get all inputs that should trigger an update
+            const inputs = document.querySelectorAll('#estimator input[type="checkbox"], #estimator input[type="radio"], #estimator input[type="number"]');
+            
+            // Add change event listener to each input
+            inputs.forEach(input => {
+                input.addEventListener('change', () => {
+                    // Calculate and update the estimate
+                    calculateEstimate();
+                });
+            });
+        }
+        
+        // Initialize auto-update when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            setupAutoUpdate();
+            
+            // Set up Select All button functionality
+            if ($('select-all-btn')) {
+                $('select-all-btn').addEventListener('click', function() {
+                    if ($('manual-quote-text')) {
+                        $('manual-quote-text').select();
+                        try {
+                            // Try to copy to clipboard when selecting all
+                            document.execCommand('copy');
+                        } catch (err) {
+                            console.error('Could not automatically copy text: ', err);
+                        }
+                    }
+                });
+            }
+            
+            // Calculate estimate on page load
+            calculateEstimate();
+        });
+        
+        // Update the manual quote text area when the estimate is calculated
+        function updateManualQuoteText(quote) {
+            if ($('manual-quote-text')) {
+                $('manual-quote-text').value = quote;
+            }
+        }
         
         // FAQ Accordion Functionality
         document.addEventListener('DOMContentLoaded', function() {
