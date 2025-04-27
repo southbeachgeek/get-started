@@ -1073,7 +1073,18 @@
                         <div class="result-title" id="summary"></div>
                         <div class="result-details" id="details"></div>
                         <div class="result-note">*Estimates are for planning only. Final scope confirmed during booking.</div>
+                        
+                        <div id="quote-preview" style="margin: 20px 0; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 5px; display: none;">
+                            <h4 style="margin-bottom: 10px;">Your Quote Summary:</h4>
+                            <div id="quote-preview-content" style="font-size: 0.9rem;"></div>
+                        </div>
+                        
+                        <div id="quote-text" style="display: none;"></div>
+                        
                         <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <button id="copy-btn" class="btn btn-primary" style="font-size: 0.9rem; padding: 8px 12px;">
+                                <i class="fas fa-copy"></i> Copy Quote to Clipboard
+                            </button>
                             <a href="https://fiverr.com/southbeachgeek/build-you-a-website" target="_blank" class="btn btn-primary" style="font-size: 0.9rem; padding: 8px 12px;">Book on Fiverr</a>
                             <a href="https://fiverr.com/inbox/southbeachgeek" target="_blank" class="btn btn-secondary" style="font-size: 0.9rem; padding: 8px 12px; background: rgba(255,255,255,0.2); border: none; color:#fff;">Send a Message</a>
                         </div>
@@ -1392,6 +1403,118 @@
             api: 2,
         };
         
+        // Generate features list
+        function generateFeaturesList() {
+            let featuresList = "";
+            
+            // Basic features
+            const pages = Math.max(1, +$('pages').value);
+            featuresList += `- ${pages} page${pages !== 1 ? 's' : ''} website\n`;
+            
+            if ($('ecom').checked) {
+                const products = +$('products').value || 1;
+                featuresList += `- E-commerce functionality with ${products} product${products !== 1 ? 's' : ''}\n`;
+            }
+            
+            if ($('book').checked) featuresList += "- Booking/scheduling functionality\n";
+            if ($('contactForm').checked) featuresList += "- Contact form\n";
+            if ($('blogSection').checked) featuresList += "- Blog/news section\n";
+            if ($('imageGallery').checked) featuresList += "- Portfolio/image gallery\n";
+            
+            // Advanced features
+            if ($('member').checked) featuresList += "- Membership/portal functionality\n";
+            if ($('multi').checked) featuresList += "- Multilingual support\n";
+            if ($('api').checked) featuresList += "- Custom API/integration\n";
+            
+            if ($('migrate').checked) {
+                const migratePages = +$('migratePages').value || 1;
+                featuresList += `- Content migration (${migratePages} page${migratePages !== 1 ? 's' : ''})\n`;
+            }
+            
+            // Design involvement
+            const designRadios = document.querySelectorAll('input[name="designLevel"]');
+            let designLevel = "";
+            designRadios.forEach(r => { 
+                if (r.checked) {
+                    switch(r.value) {
+                        case "1": designLevel = "Hands Free"; break;
+                        case "2": designLevel = "Collaborative"; break;
+                        case "3": designLevel = "Full Control"; break;
+                    }
+                }
+            });
+            
+            featuresList += `- Design involvement: ${designLevel}\n`;
+            
+            return featuresList;
+        }
+
+        // Quote generation function
+        function generateQuote(hours, cost, features) {
+            const today = new Date();
+            const expiryDate = new Date(today);
+            expiryDate.setMonth(today.getMonth() + 3); // 3 months validity
+            
+            return `Hi Aaron,
+
+I've used your estimator tool and would like to book a website development session. Based on my needs, here's what I'm looking for:
+
+SELECTED FEATURES:
+${features}
+
+ESTIMATED TIME & COST:
+- Estimated hours: ${hours} hour${hours !== 1 ? 's' : ''}
+- Total cost: $${cost}
+
+I understand that:
+- The initial session will be 1 hour over Zoom where you'll build the foundation of my site
+- For projects requiring more than 1 hour, I'll place an order for the full amount upfront
+- You'll close the order after the initial 1 hour Zoom session is completed, and I'll have until ${expiryDate.toLocaleDateString()} (3 months) to schedule any remaining hours
+- All premium tools and lifetime support via Fiverr messages are included
+
+Please create a custom offer for $${cost} and I'll book my session using your Calendly link after purchase: https://calendly.com/southbeachgeek/1hr
+
+Looking forward to working with you!`;
+        }
+
+        // Copy to clipboard functionality
+        function copyToClipboard() {
+            const quoteText = $('quote-text').innerText;
+            
+            navigator.clipboard.writeText(quoteText).then(() => {
+                // Success feedback
+                const copyBtn = $('copy-btn');
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                copyBtn.classList.add('copied');
+                
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                // Fallback
+                const textArea = document.createElement('textarea');
+                textArea.value = quoteText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                // Show fallback feedback
+                const copyBtn = $('copy-btn');
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                copyBtn.classList.add('copied');
+                
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
         // Estimate calculation
         $('estimateBtn').addEventListener('click', () => {
             let hours = 1; // base hour for core build
@@ -1440,13 +1563,23 @@
             // Determine category based on hours
             const category = hours === 1 ? 'Quick & Easy – 1 session' : 'Complex – may need multiple sessions';
             
+            // Generate features list and quote
+            const features = generateFeaturesList();
+            const quote = generateQuote(hours, cost, features);
+            
             // Display results
             $('result').style.display = 'block';
             $('summary').textContent = category;
             $('details').textContent = `Estimated time: ${hours} hour${hours !== 1 ? 's' : ''}. Estimated cost: $${cost}.`;
             
-        // Removed auto-scroll functionality as requested
+            // Show quote preview and store full quote
+            $('quote-preview').style.display = 'block';
+            $('quote-preview-content').textContent = features;
+            $('quote-text').textContent = quote;
         });
+
+        // Setup copy button
+        $('copy-btn').addEventListener('click', copyToClipboard);
         
         // FAQ Accordion Functionality
         document.addEventListener('DOMContentLoaded', function() {
